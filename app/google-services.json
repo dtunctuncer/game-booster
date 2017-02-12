@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "79295731362",
+    "firebase_url": "https://game-booster-f5203.firebaseio.com",
+    "project_id": "game-booster-f5203",
+    "storage_bucket": "game-booster-f5203.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79295731362:android:676130cfc570aa5a",
+        "android_client_info": {
+          "package_name": "com.dtunctuncer.booster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79295731362-t0f98eefof15c6cv29qbblgss6oapies.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dtunctuncer.booster",
+            "certificate_hash": "4C9A1813532E53D68671A229647DFEA445AA1839"
+          }
+        },
+        {
+          "client_id": "79295731362-pr7i90852qhveas2nou506in034pe6nu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFXcLgl9LuFh5AUK5zj2kLI-W6vFBa-so"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79295731362-pr7i90852qhveas2nou506in034pe6nu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

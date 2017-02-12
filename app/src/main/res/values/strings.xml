@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GameBooster</string>
+    <string name="apps">Apps</string>
+    <string name="root_modes">Root Modes</string>
+    <string name="please_choose_app_which_you_want_to_boost">Please choose app which you want to boost</string>
+    <string name="app_boost_error">There is an error occurred while application trying to open</string>
+    <string name="app_boosted">App is bossted</string>
+    <string name="high_mode">HIGH BOOST</string>
+    <string name="high_mode_help">Boosts the device for gaming\n\n-All CPU cores will be running at high speed\n-CPU will be optimized for high performance</string>
+    <string name="ultra_mode">ULTRA BOOST</string>
+    <string name="ultra_mode_help">Boosts the device for benchmarks and heavy gaming\n\n-All CPU cores will be running at max speed\n-All CPU cores will be forced to stay awake\n-CPU will be optimized for max performance\n-RAM-Free Tweak will be applied\n-SD Card boost tweak will be applied for max performance</string>
+    <string name="stop">STOP</string>
+    <string name="notification_title">GameBooster active</string>
+    <string name="ok">OK</string>
+    <string name="no_root_error">Nope, your device has\'t rooted yet</string>
+    <string name="no_mode">No Mode</string>
+    <string name="dialog_title">Boosting...</string>
+    <string name="no_root_permission">You can not use modes without root permission</string>
+</resources>
