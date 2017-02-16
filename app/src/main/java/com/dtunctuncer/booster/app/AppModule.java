@@ -14,7 +14,6 @@ public class AppModule {
         this.view = view;
     }
 
-
     @Provides
     @FragmentScope
     IAppView provideView() {

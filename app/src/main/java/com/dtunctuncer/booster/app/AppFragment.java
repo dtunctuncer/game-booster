@@ -52,9 +52,14 @@ public class AppFragment extends Fragment implements IAppView {
     @Override
     public void showApplications(List<AppInfo> appInfoList) {
         AppAdapter appAdapter = new AppAdapter(appInfoList, getActivity(), rxBus);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         appRecyclerView.setLayoutManager(manager);
         appRecyclerView.setAdapter(appAdapter);
+    }
+
+    @Override
+    public void startBoostingProgress() {
+        getActivity().finish();
     }
 
     @Override

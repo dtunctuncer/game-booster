@@ -1,6 +1,5 @@
 package com.dtunctuncer.booster.app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -88,7 +87,7 @@ class AppPresenter {
         intent.addCategory("android.intent.category.LAUNCHER");
         context.startActivity(intent);
         Toast.makeText(context, R.string.app_boosted, Toast.LENGTH_SHORT).show();
-        ((Activity) context).finish();
+        view.startBoostingProgress();
     }
 
     void unsunbscribe() {
