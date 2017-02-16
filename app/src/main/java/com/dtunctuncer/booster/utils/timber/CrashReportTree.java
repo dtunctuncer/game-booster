@@ -1,4 +1,4 @@
-package com.dtunctuncer.booster.utils;
+package com.dtunctuncer.booster.utils.timber;
 
 import android.util.Log;
 

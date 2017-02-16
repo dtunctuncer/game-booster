@@ -4,7 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.BoosterModes;
+import com.dtunctuncer.booster.utils.BoosterModeManager;
 import com.dtunctuncer.booster.utils.SpUtils;
 
 public class BoosterService extends Service {
@@ -23,7 +24,7 @@ public class BoosterService extends Service {
     public void onCreate() {
         super.onCreate();
         this.dataManager = new SpUtils(getApplicationContext());
-        this.boosterModeManager = new BoosterModeManager(getApplicationContext());
+        this.boosterModeManager = new BoosterModeManager();
         performOnBackgroundThread().start();
     }
 
@@ -34,14 +35,14 @@ public class BoosterService extends Service {
                     try {
                         Thread.sleep(150);
                         switch (BoosterService.this.dataManager.getCurrentMode()) {
-                            case R.styleable.View_android_theme /*0*/:
+                            case BoosterModes.NO_MODE /*0*/:
                                 BoosterService.this.runOrNot = false;
                                 BoosterService.this.stopSelf();
                                 break;
-                            case R.styleable.View_android_focusable /*1*/:
+                            case BoosterModes.HIGH_MODE /*1*/:
                                 BoosterService.this.boosterModeManager.setMode(1);
                                 break;
-                            case R.styleable.View_paddingStart /*2*/:
+                            case BoosterModes.ULTRA_MODE /*2*/:
                                 BoosterService.this.boosterModeManager.setMode(2);
                                 break;
                             default:

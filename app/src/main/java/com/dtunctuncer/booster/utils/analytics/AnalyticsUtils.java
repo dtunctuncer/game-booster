@@ -1,4 +1,4 @@
-package com.dtunctuncer.booster.utils;
+package com.dtunctuncer.booster.utils.analytics;
 
 import android.content.Context;
 

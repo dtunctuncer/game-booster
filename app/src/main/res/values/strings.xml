@@ -4,7 +4,7 @@
     <string name="root_modes">Root Modes</string>
     <string name="please_choose_app_which_you_want_to_boost">Please choose app which you want to boost</string>
     <string name="app_boost_error">There is an error occurred while application trying to open</string>
-    <string name="app_boosted">App is bossted</string>
+    <string name="app_boosted">App is boosted</string>
     <string name="high_mode">HIGH BOOST</string>
     <string name="high_mode_help">Boosts the device for gaming\n\n-All CPU cores will be running at high speed\n-CPU will be optimized for high performance</string>
     <string name="ultra_mode">ULTRA BOOST</string>

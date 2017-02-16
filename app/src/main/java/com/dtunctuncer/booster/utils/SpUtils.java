@@ -4,19 +4,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.BoosterModes;
 
 public class SpUtils {
     public static final String CURRENT_MODE = "CURRENT_MODE";
 
-    Context context;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefsEditor;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
 
     public SpUtils(Context context) {
-        this.context = context;
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefsEditor = this.prefs.edit();
+    }
+
+    public SpUtils(SharedPreferences.Editor prefsEditor, SharedPreferences prefs) {
+        this.prefs = prefs;
+        this.prefsEditor = prefsEditor;
     }
 
     public void setString(String key, String value) {
@@ -44,13 +47,13 @@ public class SpUtils {
 
     public void setCurrentMode(int mode) {
         switch (mode) {
-            case R.styleable.View_android_theme /*0*/:
+            case BoosterModes.NO_MODE /*0*/:
                 this.prefsEditor.putInt(CURRENT_MODE, 0);
                 break;
-            case R.styleable.View_android_focusable /*1*/:
+            case BoosterModes.HIGH_MODE/*1*/:
                 this.prefsEditor.putInt(CURRENT_MODE, 1);
                 break;
-            case R.styleable.View_paddingStart /*2*/:
+            case BoosterModes.ULTRA_MODE/*2*/:
                 this.prefsEditor.putInt(CURRENT_MODE, 2);
                 break;
         }

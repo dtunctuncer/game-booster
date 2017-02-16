@@ -9,10 +9,10 @@ import java.util.List;
 
 public class RAMBoosterUtil {
     private static final long MEMORY_UNIT = 1048576;
-    public static RAMBoosterUtil instance = null;
-    int freeMemory;
-    int percentage;
-    int totalMemory;
+    private static RAMBoosterUtil instance = null;
+    private int freeMemory;
+    private int percentage;
+    private int totalMemory;
 
     public static RAMBoosterUtil getInstance() {
         if (instance == null) {
@@ -21,16 +21,16 @@ public class RAMBoosterUtil {
         return instance;
     }
 
-    public ArrayList<Integer> getMemoryStatus(Activity activity) {
+    public List<Integer> getMemoryStatus(Activity activity) {
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(memoryInfo);
         this.totalMemory = (int) (memoryInfo.totalMem / MEMORY_UNIT);
         this.freeMemory = (int) (memoryInfo.availMem / MEMORY_UNIT);
         this.percentage = (int) (((memoryInfo.availMem / MEMORY_UNIT) * 100) / (memoryInfo.totalMem / MEMORY_UNIT));
-        ArrayList<Integer> memoryInfoList = new ArrayList();
-        memoryInfoList.add(Integer.valueOf(this.totalMemory));
-        memoryInfoList.add(Integer.valueOf(this.freeMemory));
-        memoryInfoList.add(Integer.valueOf(100 - this.percentage));
+        List<Integer> memoryInfoList = new ArrayList<>();
+        memoryInfoList.add(this.totalMemory);
+        memoryInfoList.add(this.freeMemory);
+        memoryInfoList.add(100 - this.percentage);
         return memoryInfoList;
     }
 

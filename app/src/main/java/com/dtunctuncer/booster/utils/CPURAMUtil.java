@@ -65,7 +65,7 @@ public class CPURAMUtil {
     }
 
     public static ArrayList<OneCpuInfo> takeCpuUsageSnapshot() {
-        ArrayList<OneCpuInfo> result = new ArrayList();
+        ArrayList<OneCpuInfo> result = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream("/proc/stat")), 1000);
@@ -134,33 +134,15 @@ public class CPURAMUtil {
     }
 
     public static long getFreeMemorySize(Context context) throws Throwable {
-        RandomAccessFile randomAccessFile;
-        IOException ex;
-        Throwable th;
         long total_ram = 0;
         try {
             RandomAccessFile reader = new RandomAccessFile("/proc/meminfo", "r");
             try {
                 total_ram = Long.parseLong(reader.readLine().replaceAll("\\D+", BuildConfig.FLAVOR)) / 1024;
-                randomAccessFile = reader;
             } catch (IOException e) {
-                ex = e;
-                randomAccessFile = reader;
-                try {
-                    ex.printStackTrace();
-                    return total_ram - getUsedMemorySize(context);
-                } catch (Throwable th2) {
-                    th = th2;
-                    throw th;
-                }
-            } catch (Throwable th3) {
-                th = th3;
-                randomAccessFile = reader;
-                throw th;
+                return total_ram - getUsedMemorySize(context);
             }
         } catch (IOException e2) {
-            ex = e2;
-            ex.printStackTrace();
             return total_ram - getUsedMemorySize(context);
         }
         return total_ram - getUsedMemorySize(context);
