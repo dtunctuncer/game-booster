@@ -9,4 +9,8 @@
                 <item name="android:navigationBarColor">@color/navigationBarColor</item>
         </style>
 
+        <style name="LauncherAppTheme" parent="AppTheme">
+                <item name="android:windowBackground">@drawable/splash_screen_logo</item>
+        </style>
+
 </resources>
