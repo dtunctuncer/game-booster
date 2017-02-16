@@ -65,7 +65,7 @@ public class CPURAMUtil {
     }
 
     public static ArrayList<OneCpuInfo> takeCpuUsageSnapshot() {
-        ArrayList<OneCpuInfo> result = new ArrayList();
+        ArrayList<OneCpuInfo> result = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream("/proc/stat")), 1000);

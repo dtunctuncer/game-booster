@@ -1,6 +1,7 @@
 package com.dtunctuncer.booster.rootbooster;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,18 +12,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dtunctuncer.booster.App;
 import com.dtunctuncer.booster.R;
 import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.model.RootMode;
+import com.dtunctuncer.booster.utils.RxBus;
 import com.dtunctuncer.booster.utils.SpUtils;
 import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RootFragment extends Fragment implements IRootView, RootAdapterListener {
+public class RootFragment extends Fragment implements IRootView {
+
+    @Inject
+    RootPresenter presenter;
+    @Inject
+    SpUtils dataManager;
+    @Inject
+    RxBus rxBus;
 
 
     @BindView(R.id.rootErrorText)
@@ -30,8 +42,6 @@ public class RootFragment extends Fragment implements IRootView, RootAdapterList
     @BindView(R.id.rootModeRecyclerView)
     RecyclerView rootModeRecyclerView;
 
-    private RootPresenter presenter;
-    private SpUtils dataManager;
     private ProgressDialog dialog;
     private RootAdapter rootAdapter;
 
@@ -40,9 +50,9 @@ public class RootFragment extends Fragment implements IRootView, RootAdapterList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_root, container, false);
         ButterKnife.bind(this, view);
-        this.dataManager = new SpUtils(getActivity().getApplicationContext());
-        this.presenter = new RootPresenter(this, getContext());
+        DaggerRootComponent.builder().applicationComponent(App.getApplicationComponent()).rootModule(new RootModule(this)).build().inject(this);
 
+        presenter.subscribe();
         presenter.checkRoot();
         presenter.getBoosterModes();
         return view;
@@ -55,6 +65,12 @@ public class RootFragment extends Fragment implements IRootView, RootAdapterList
     }
 
     @Override
+    public void onDestroy() {
+        presenter.unsubscribe();
+        super.onDestroy();
+    }
+
+    @Override
     public void closeRootError() {
         rootErrorText.setVisibility(View.GONE);
     }
@@ -62,19 +78,24 @@ public class RootFragment extends Fragment implements IRootView, RootAdapterList
     @Override
     public void showBoosterMode(List<RootMode> rootModes) {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        rootAdapter = new RootAdapter(rootModes, getActivity());
-        rootAdapter.setListener(this);
+        rootAdapter = new RootAdapter(rootModes, getActivity(), rxBus);
         rootModeRecyclerView.setLayoutManager(manager);
         rootModeRecyclerView.setAdapter(rootAdapter);
     }
 
     @Override
     public void startBoost() {
-        if (dialog != null && !dialog.isShowing()) {
-            showProgres();
-        } else if (dialog == null && dataManager.getCurrentMode() == BoosterModes.NO_MODE) {
-            showProgres();
-        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog != null && !dialog.isShowing()) {
+                    showProgres();
+                } else if (dialog == null && dataManager.getCurrentMode() == BoosterModes.NO_MODE) {
+                    showProgres();
+                }
+            }
+        });
+        getActivity().startService(new Intent(getContext().getApplicationContext(), BoosterService.class));
     }
 
     public void clearModes() {
@@ -91,7 +112,7 @@ public class RootFragment extends Fragment implements IRootView, RootAdapterList
             public void run() {
                 for (int i = 0; i <= 9; i++) {
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(150);
                         dialog.incrementProgressBy(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();

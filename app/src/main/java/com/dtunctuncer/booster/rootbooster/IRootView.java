@@ -8,4 +8,6 @@ public interface IRootView {
     void closeRootError();
 
     void showBoosterMode(List<RootMode> rootModes);
+
+    void startBoost();
 }

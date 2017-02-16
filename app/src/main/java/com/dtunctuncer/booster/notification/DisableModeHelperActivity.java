@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.dtunctuncer.booster.rootbooster.BoosterModeManager;
+import com.dtunctuncer.booster.utils.BoosterModeManager;
 import com.dtunctuncer.booster.utils.SpUtils;
 
 public class DisableModeHelperActivity extends Activity {

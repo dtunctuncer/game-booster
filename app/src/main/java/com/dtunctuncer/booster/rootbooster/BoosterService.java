@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.dtunctuncer.booster.core.BoosterModes;
+import com.dtunctuncer.booster.utils.BoosterModeManager;
 import com.dtunctuncer.booster.utils.SpUtils;
 
 public class BoosterService extends Service {

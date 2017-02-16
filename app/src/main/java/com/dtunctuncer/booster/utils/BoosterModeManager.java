@@ -1,4 +1,4 @@
-package com.dtunctuncer.booster.rootbooster;
+package com.dtunctuncer.booster.utils;
 
 import com.dtunctuncer.booster.core.BoosterModes;
 import com.stericson.RootTools.RootTools;

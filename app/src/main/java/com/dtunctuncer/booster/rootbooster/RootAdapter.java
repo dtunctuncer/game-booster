@@ -1,7 +1,6 @@
 package com.dtunctuncer.booster.rootbooster;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -15,9 +14,9 @@ import android.widget.Toast;
 import com.dtunctuncer.booster.R;
 import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.core.EventCategories;
+import com.dtunctuncer.booster.core.events.ChangeRootModeEvent;
 import com.dtunctuncer.booster.model.RootMode;
-import com.dtunctuncer.booster.notification.ModeNotification;
-import com.dtunctuncer.booster.utils.SpUtils;
+import com.dtunctuncer.booster.utils.RxBus;
 import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 import com.stericson.RootTools.RootTools;
 
@@ -29,23 +28,12 @@ import butterknife.ButterKnife;
 class RootAdapter extends RecyclerView.Adapter<RootAdapter.ViewHolder> {
     private List<RootMode> rootModes;
     private Context context;
-    private SpUtils spUtils;
-    private RootAdapterListener listener;
-    private BoosterModeManager boosterModeManager;
-    private ModeNotification modeNotification;
+    private RxBus rxBus;
 
-
-    RootAdapter(List<RootMode> rootModes, Context context) {
+    RootAdapter(List<RootMode> rootModes, Context context, RxBus rxBus) {
+        this.rxBus = rxBus;
         this.rootModes = rootModes;
         this.context = context;
-        this.spUtils = new SpUtils(context);
-        this.boosterModeManager = new BoosterModeManager();
-        this.modeNotification = new ModeNotification(context.getApplicationContext());
-    }
-
-
-    void setListener(RootAdapterListener listener) {
-        this.listener = listener;
     }
 
     @Override
@@ -124,8 +112,9 @@ class RootAdapter extends RecyclerView.Adapter<RootAdapter.ViewHolder> {
             Handler handler = new Handler();
             final Runnable r = new Runnable() {
                 public void run() {
-                    if (checked) {
-                        for (RootMode mode : rootModes) {
+
+                    for (RootMode mode : rootModes) {
+                        if (checked) {
                             if (mode.getIsActive()) {
                                 mode.setIsActive(false);
                             }
@@ -133,30 +122,21 @@ class RootAdapter extends RecyclerView.Adapter<RootAdapter.ViewHolder> {
                             if (rootMode.getBootMode() == mode.getBootMode()) {
                                 mode.setIsActive(true);
                             }
-                        }
-                    } else {
-
-                        for (RootMode mode : rootModes) {
+                        } else {
                             if (rootMode.getBootMode() == mode.getBootMode()) {
                                 mode.setIsActive(false);
                             }
                         }
-
                     }
 
                     if (hasActive(rootModes)) {
                         for (RootMode mode : rootModes) {
                             if (mode.getIsActive()) {
-                                listener.startBoost();
-                                spUtils.setCurrentMode(mode.getBootMode());
-                                boosterModeManager.setMode(mode.getBootMode());
-                                context.startService(new Intent(context.getApplicationContext(), BoosterService.class));
-                                modeNotification.startNotification(mode.getBootMode());
+                                rxBus.send(new ChangeRootModeEvent(mode.getBootMode()));
                             }
                         }
                     } else {
-                        spUtils.setCurrentMode(BoosterModes.NO_MODE);
-                        modeNotification.startNotification(BoosterModes.NO_MODE);
+                        rxBus.send(new ChangeRootModeEvent(BoosterModes.NO_MODE));
                     }
 
                     notifyDataSetChanged();

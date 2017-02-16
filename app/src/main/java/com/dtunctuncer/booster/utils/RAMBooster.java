@@ -5,8 +5,8 @@ import android.content.Context;
 import timber.log.Timber;
 
 public class RAMBooster {
-    Context context;
-    int free_memory;
+    private Context context;
+    private int free_memory;
 
     public RAMBooster(Context context) {
         this.context = context;
