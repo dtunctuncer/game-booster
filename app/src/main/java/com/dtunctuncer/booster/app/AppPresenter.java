@@ -1,21 +1,43 @@
 package com.dtunctuncer.booster.app;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.EventCategories;
+import com.dtunctuncer.booster.core.events.AppClickEvent;
 import com.dtunctuncer.booster.model.AppInfo;
+import com.dtunctuncer.booster.utils.RAMBooster;
+import com.dtunctuncer.booster.utils.RxBus;
+import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import rx.Subscription;
+import rx.functions.Action1;
+import rx.internal.schedulers.ExecutorScheduler;
+
 class AppPresenter {
     private IAppView view;
     private Context context;
+    private RxBus rxBus;
+    private Subscription subscription;
+    private RAMBooster ramBooster;
 
-    AppPresenter(IAppView view, Context context) {
+    @Inject
+    AppPresenter(IAppView view, Context context, RxBus rxBus) {
+        this.ramBooster = new RAMBooster(context.getApplicationContext());
         this.view = view;
         this.context = context;
+        this.rxBus = rxBus;
     }
 
     void getApplicationList() {
@@ -37,5 +59,41 @@ class AppPresenter {
         }
 
         view.showApplications(appInfoList);
+    }
+
+    void subscribe() {
+        subscription = rxBus.toObserverable()
+                .subscribeOn(new ExecutorScheduler(AsyncTask.THREAD_POOL_EXECUTOR))
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object o) {
+                        if (o instanceof AppClickEvent) {
+                            clickApp(((AppClickEvent) o).getAppInfo());
+                        }
+                    }
+
+
+                });
+    }
+
+    private void clickApp(AppInfo appInfo) {
+        ramBooster.clearRAM();
+        AnalyticsUtils.trackEvent(EventCategories.CLICK_EVENT, "Click App Booster", "Rootsuz app boostlama tıklandı");
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(appInfo.getPackageName());
+        if (intent == null) {
+            Toast.makeText(context, R.string.app_boost_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        intent.addCategory("android.intent.category.LAUNCHER");
+        context.startActivity(intent);
+        Toast.makeText(context, R.string.app_boosted, Toast.LENGTH_SHORT).show();
+        ((Activity) context).finish();
+    }
+
+    void unsunbscribe() {
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
     }
 }

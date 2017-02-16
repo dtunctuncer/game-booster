@@ -8,13 +8,11 @@ import android.content.Intent;
 
 import com.dtunctuncer.booster.BuildConfig;
 import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.BoosterModes;
 
 public class ModeNotification {
-    public int HIGH_MODE_NOTIFICATION = 1;
-    public int NOTIFICATION_DISABLED = 0;
-    public int ULTRA_MODE_NOTIFICATION = 2;
-    Context context;
-    NotificationManager notificationManager;
+    private Context context;
+    private NotificationManager notificationManager;
 
     public ModeNotification(Context context) {
         this.context = context;
@@ -25,14 +23,14 @@ public class ModeNotification {
         String title = this.context.getString(R.string.notification_title);
         String description = BuildConfig.FLAVOR;
         switch (notifyMode) {
-            case R.styleable.View_android_theme /*0*/:
+            case BoosterModes.NO_MODE: /*0*/
                 this.notificationManager.cancelAll();
                 break;
-            case R.styleable.View_android_focusable /*1*/:
+            case BoosterModes.HIGH_MODE: /*1*/
                 this.notificationManager.cancelAll();
                 description = this.context.getString(R.string.high_mode);
                 break;
-            case R.styleable.View_paddingStart /*2*/:
+            case BoosterModes.ULTRA_MODE: /*2*/
                 this.notificationManager.cancelAll();
                 description = this.context.getString(R.string.ultra_mode);
                 break;

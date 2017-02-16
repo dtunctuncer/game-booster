@@ -1,10 +1,6 @@
 package com.dtunctuncer.booster.rootbooster;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.model.RootMode;
-import com.dtunctuncer.booster.notification.DisableModeHelperActivity;
-import com.dtunctuncer.booster.notification.ModeNotification;
-import com.dtunctuncer.booster.utils.AnalyticsUtils;
 import com.dtunctuncer.booster.utils.SpUtils;
+import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 
 import java.util.List;
 

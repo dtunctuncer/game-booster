@@ -1,4 +1,4 @@
-package com.dtunctuncer.booster.rootbooster;
+package com.dtunctuncer.booster.core;
 
 public interface BoosterModes {
     public static final int HIGH_MODE = 1;

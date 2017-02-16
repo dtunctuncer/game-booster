@@ -1,4 +1,4 @@
-package com.dtunctuncer.booster.utils;
+package com.dtunctuncer.booster.utils.analytics;
 
 import android.content.Context;
 
@@ -10,29 +10,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class AnalyticsTracker {
-    public enum Target {
-        APP
-    }
     private static AnalyticsTracker sInstance;
+    private final Map<Target, Tracker> mTrackers = new HashMap<Target, Tracker>();
+    private final Context mContext;
+
+    private AnalyticsTracker(Context context) {
+        mContext = context.getApplicationContext();
+    }
+
     public static synchronized void initialize(Context context) {
         if (sInstance != null) {
             throw new IllegalStateException("Extra call to initialize analytics trackers");
         }
         sInstance = new AnalyticsTracker(context);
     }
+
     public static synchronized AnalyticsTracker getInstance() {
         if (sInstance == null) {
             throw new IllegalStateException("Call initialize() before getInstance()");
         }
         return sInstance;
     }
-    private final Map<Target, Tracker> mTrackers = new HashMap<Target, Tracker>();
-    private final Context mContext;
 
-
-    private AnalyticsTracker(Context context) {
-        mContext = context.getApplicationContext();
-    }
     public synchronized Tracker get(Target target) {
         if (!mTrackers.containsKey(target)) {
             Tracker tracker;
@@ -46,5 +45,9 @@ public final class AnalyticsTracker {
             mTrackers.put(target, tracker);
         }
         return mTrackers.get(target);
+    }
+
+    public enum Target {
+        APP
     }
 }

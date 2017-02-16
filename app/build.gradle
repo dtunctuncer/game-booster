@@ -65,6 +65,15 @@ dependencies {
         transitive = true;
     }
 
+    //Rx
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+
+    //di
+    compile 'com.google.dagger:dagger:2.5'
+    apt 'com.google.dagger:dagger-compiler:2.5'
+    provided 'javax.annotation:jsr250-api:1.0'
+
     //Timber
     compile 'com.jakewharton.timber:timber:4.3.1'
 

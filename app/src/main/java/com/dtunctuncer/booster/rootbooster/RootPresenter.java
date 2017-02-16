@@ -2,6 +2,7 @@ package com.dtunctuncer.booster.rootbooster;
 
 import android.content.Context;
 
+import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.model.RootMode;
 import com.dtunctuncer.booster.utils.SpUtils;
 import com.stericson.RootTools.RootTools;

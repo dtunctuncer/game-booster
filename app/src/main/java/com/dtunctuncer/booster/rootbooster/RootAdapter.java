@@ -13,11 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.core.EventCategories;
 import com.dtunctuncer.booster.model.RootMode;
 import com.dtunctuncer.booster.notification.ModeNotification;
-import com.dtunctuncer.booster.utils.AnalyticsUtils;
 import com.dtunctuncer.booster.utils.SpUtils;
+import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 import com.stericson.RootTools.RootTools;
 
 import java.util.List;
@@ -38,7 +39,7 @@ class RootAdapter extends RecyclerView.Adapter<RootAdapter.ViewHolder> {
         this.rootModes = rootModes;
         this.context = context;
         this.spUtils = new SpUtils(context);
-        this.boosterModeManager = new BoosterModeManager(context.getApplicationContext());
+        this.boosterModeManager = new BoosterModeManager();
         this.modeNotification = new ModeNotification(context.getApplicationContext());
     }
 

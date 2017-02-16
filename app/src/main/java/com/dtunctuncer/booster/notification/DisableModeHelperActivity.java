@@ -13,7 +13,7 @@ public class DisableModeHelperActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new ModeNotification(getApplicationContext()).startNotification(0);
-        new BoosterModeManager(getApplicationContext()).setMode(0);
+        new BoosterModeManager().setMode(0);
         new SpUtils(getApplicationContext()).setCurrentMode(0);
         sendBroadcast(new Intent(CLEAR_ACTION));
         finish();
