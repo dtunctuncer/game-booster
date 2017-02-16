@@ -28,21 +28,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-
-        release {
-            storeFile file("../app/key/keystore.jks")
-            storePassword "1358110081deniz"
-            keyAlias "dtunctuncer"
-            keyPassword "1358110081deniz"
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 }
@@ -66,7 +55,7 @@ dependencies {
     }
 
     //Rx
-    compile 'io.reactivex:rxandroid:1.2.1'
+//    compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
 
     //di
