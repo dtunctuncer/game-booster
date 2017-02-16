@@ -12,3 +12,6 @@
 /gradle.properties
 
 
+app/fabric.properties
+app/src/androidTest/
+app/src/test/
