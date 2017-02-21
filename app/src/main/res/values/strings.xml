@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GameBooster</string>
+    <string name="app_name">Game Booster</string>
     <string name="apps">Apps</string>
     <string name="root_modes">Root Modes</string>
     <string name="please_choose_app_which_you_want_to_boost">Please choose app which you want to boost</string>
