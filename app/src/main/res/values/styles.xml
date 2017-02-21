@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="LauncherAppTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_screen_logo</item>
+    </style>
+
 </resources>
