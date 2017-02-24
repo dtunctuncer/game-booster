@@ -1,6 +1,7 @@
 package com.dtunctuncer.booster;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -13,11 +14,18 @@ import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
 import com.dtunctuncer.booster.utils.timber.CrashReportTree;
 import com.stericson.RootTools.RootTools;
 
+import javax.inject.Inject;
+
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class App extends Application {
+
     private static ApplicationComponent applicationComponent;
+    @Inject
+    SharedPreferences preferences;
+    @Inject
+    SharedPreferences.Editor editor;
 
     public static ApplicationComponent getApplicationComponent() {
         return applicationComponent;
@@ -33,11 +41,17 @@ public class App extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
+        applicationComponent.inject(this);
+
 
         //Google Anaylicts
         AnalyticsTracker.initialize(this);
 
-        AnalyticsUtils.trackEvent(EventCategories.ROOT_EVENT, "Root Check", "isRootAvailable : " + RootTools.isRootAvailable());
+        if (!preferences.getBoolean(EventCategories.ROOT_EVENT, false)) {
+            AnalyticsUtils.trackEvent(EventCategories.ROOT_EVENT, "Root Check", "isRootAvailable : " + RootTools.isRootAvailable());
+            editor.putBoolean(EventCategories.ROOT_EVENT, true);
+            editor.apply();
+        }
 
         //Crashlatics
         CrashlyticsCore core = new CrashlyticsCore.Builder()

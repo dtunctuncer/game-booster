@@ -23,4 +23,6 @@ public interface ApplicationComponent {
     Context context();
 
     SharedPreferences.Editor edit();
+
+    void inject(App app);
 }
