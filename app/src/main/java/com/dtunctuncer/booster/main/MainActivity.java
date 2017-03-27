@@ -11,12 +11,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.dtunctuncer.booster.R;
 import com.dtunctuncer.booster.app.AppFragment;
 import com.dtunctuncer.booster.notification.DisableModeHelperActivity;
 import com.dtunctuncer.booster.rootbooster.RootFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     CoordinatorLayout activityMain;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.banner)
+    AdView banner;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initAd();
+
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.app_name);
@@ -56,18 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
         initFragments();
 
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerReceiver(receiver, new IntentFilter(DisableModeHelperActivity.CLEAR_ACTION));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(receiver);
+    private void initAd() {
+        MobileAds.initialize(this, getString(R.string.ad_app_id));
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("2877C940850B2E89FED5B22AC70F79B3")
+                .addTestDevice("17833CDB8A54F87C87757BC82886AD07")
+                .build();
+        banner.loadAd(adRequest);
     }
 
     private void initFragments() {
@@ -83,5 +89,41 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(receiver, new IntentFilter(DisableModeHelperActivity.CLEAR_ACTION));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onPause() {
+        if (banner != null) {
+            banner.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (banner != null) {
+            banner.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (banner != null) {
+            banner.destroy();
+        }
+        super.onDestroy();
     }
 }

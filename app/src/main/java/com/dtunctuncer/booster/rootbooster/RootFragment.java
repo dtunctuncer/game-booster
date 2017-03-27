@@ -19,6 +19,9 @@ import com.dtunctuncer.booster.model.RootMode;
 import com.dtunctuncer.booster.utils.RxBus;
 import com.dtunctuncer.booster.utils.SpUtils;
 import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 
@@ -44,6 +47,7 @@ public class RootFragment extends Fragment implements IRootView {
 
     private ProgressDialog dialog;
     private RootAdapter rootAdapter;
+    private InterstitialAd interstitialAd;
 
     @Nullable
     @Override
@@ -55,7 +59,32 @@ public class RootFragment extends Fragment implements IRootView {
         presenter.subscribe();
         presenter.checkRoot();
         presenter.getBoosterModes();
+        initAd();
         return view;
+    }
+
+    private void initAd() {
+        interstitialAd = new InterstitialAd(getContext());
+        interstitialAd.setAdUnitId(getString(R.string.interstial_root_ad_unit_id));
+
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("2877C940850B2E89FED5B22AC70F79B3")
+                .addTestDevice("17833CDB8A54F87C87757BC82886AD07")
+                .build();
+
+        interstitialAd.loadAd(adRequest);
     }
 
     @Override
@@ -96,6 +125,13 @@ public class RootFragment extends Fragment implements IRootView {
             }
         });
         getActivity().startService(new Intent(getContext().getApplicationContext(), BoosterService.class));
+    }
+
+    @Override
+    public void showInterstitalAd() {
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
     }
 
     public void clearModes() {

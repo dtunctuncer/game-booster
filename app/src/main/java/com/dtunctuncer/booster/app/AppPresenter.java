@@ -76,6 +76,17 @@ class AppPresenter {
     }
 
     private void clickApp(AppInfo appInfo) {
+
+        view.startBoostingProgress(appInfo);
+    }
+
+    void unsunbscribe() {
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
+    }
+
+    void openApp(AppInfo appInfo) {
         ramBooster.clearRAM();
         AnalyticsUtils.trackEvent(EventCategories.CLICK_EVENT, "Click App Booster", "Rootsuz app boostlama tıklandı");
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(appInfo.getPackageName());
@@ -87,12 +98,5 @@ class AppPresenter {
         intent.addCategory("android.intent.category.LAUNCHER");
         context.startActivity(intent);
         Toast.makeText(context, R.string.app_boosted, Toast.LENGTH_SHORT).show();
-        view.startBoostingProgress();
-    }
-
-    void unsunbscribe() {
-        if (subscription != null) {
-            subscription.unsubscribe();
-        }
     }
 }

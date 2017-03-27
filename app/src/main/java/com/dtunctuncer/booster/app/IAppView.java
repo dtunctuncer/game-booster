@@ -7,5 +7,5 @@ import java.util.List;
 interface IAppView {
     void showApplications(List<AppInfo> appInfoList);
 
-    void startBoostingProgress();
+    void startBoostingProgress(AppInfo appInfo);
 }

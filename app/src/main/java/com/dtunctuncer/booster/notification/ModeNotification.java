@@ -40,7 +40,7 @@ public class ModeNotification {
                     new Notification.Builder(this.context)
                             .setContentTitle(title)
                             .setContentText(description).
-                            setSmallIcon(R.drawable.notify_icon)
+                            setSmallIcon(R.drawable.ic_stat_my_logo_1)
                             .setPriority(Notification.PRIORITY_MAX)
                             .setOngoing(true)
                             .addAction(R.drawable.ic_clear_black_24dp,
@@ -52,5 +52,3 @@ public class ModeNotification {
         }
     }
 }
-
-//268435456

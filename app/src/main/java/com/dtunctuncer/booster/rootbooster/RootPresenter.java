@@ -1,7 +1,9 @@
 package com.dtunctuncer.booster.rootbooster;
 
+import com.dtunctuncer.booster.core.AdTypes;
 import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.core.events.ChangeRootModeEvent;
+import com.dtunctuncer.booster.core.events.ShowAdEvent;
 import com.dtunctuncer.booster.model.RootMode;
 import com.dtunctuncer.booster.notification.ModeNotification;
 import com.dtunctuncer.booster.utils.BoosterModeManager;
@@ -49,7 +51,10 @@ class RootPresenter {
                             } else {
                                 startRootMode(((ChangeRootModeEvent) o).getMode());
                             }
-
+                        } else if (o instanceof ShowAdEvent) {
+                            if (((ShowAdEvent) o).getAdType() == AdTypes.INTERSTITIAL) {
+                                view.showInterstitalAd();
+                            }
                         }
                     }
                 });

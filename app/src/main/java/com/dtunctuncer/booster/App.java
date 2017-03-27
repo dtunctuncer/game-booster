@@ -65,6 +65,5 @@ public class App extends Application {
         } else {
             Timber.plant(new CrashReportTree());
         }
-
     }
 }

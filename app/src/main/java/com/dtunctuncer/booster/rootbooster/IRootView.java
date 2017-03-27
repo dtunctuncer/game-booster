@@ -10,4 +10,6 @@ public interface IRootView {
     void showBoosterMode(List<RootMode> rootModes);
 
     void startBoost();
+
+    void showInterstitalAd();
 }

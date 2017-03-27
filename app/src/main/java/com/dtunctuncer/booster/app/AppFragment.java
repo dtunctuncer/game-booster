@@ -14,6 +14,9 @@ import com.dtunctuncer.booster.R;
 import com.dtunctuncer.booster.model.AppInfo;
 import com.dtunctuncer.booster.utils.RxBus;
 import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 
@@ -32,6 +35,9 @@ public class AppFragment extends Fragment implements IAppView {
     @BindView(R.id.appRecyclerView)
     RecyclerView appRecyclerView;
 
+    private InterstitialAd interstitialAd;
+    private AppInfo appInfo;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +46,39 @@ public class AppFragment extends Fragment implements IAppView {
         DaggerAppComponent.builder().applicationComponent(App.getApplicationComponent()).appModule(new AppModule(this)).build().inject(this);
         presenter.subscribe();
         presenter.getApplicationList();
+        initAd();
         return view;
     }
+
+    private void initAd() {
+        interstitialAd = new InterstitialAd(getContext());
+        interstitialAd.setAdUnitId(getString(R.string.interstial_ad_unit_id));
+
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                if (appInfo != null) {
+                    presenter.openApp(appInfo);
+                    getActivity().finish();
+                }
+
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("2877C940850B2E89FED5B22AC70F79B3")
+                .addTestDevice("17833CDB8A54F87C87757BC82886AD07")
+                .build();
+
+        interstitialAd.loadAd(adRequest);
+    }
+
 
     @Override
     public void onResume() {
@@ -58,8 +95,14 @@ public class AppFragment extends Fragment implements IAppView {
     }
 
     @Override
-    public void startBoostingProgress() {
-        getActivity().finish();
+    public void startBoostingProgress(AppInfo appInfo) {
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        } else {
+            presenter.openApp(appInfo);
+            getActivity().finish();
+        }
+        this.appInfo = appInfo;
     }
 
     @Override

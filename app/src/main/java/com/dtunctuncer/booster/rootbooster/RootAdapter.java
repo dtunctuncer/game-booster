@@ -12,9 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtunctuncer.booster.R;
+import com.dtunctuncer.booster.core.AdTypes;
 import com.dtunctuncer.booster.core.BoosterModes;
 import com.dtunctuncer.booster.core.EventCategories;
 import com.dtunctuncer.booster.core.events.ChangeRootModeEvent;
+import com.dtunctuncer.booster.core.events.ShowAdEvent;
 import com.dtunctuncer.booster.model.RootMode;
 import com.dtunctuncer.booster.utils.RxBus;
 import com.dtunctuncer.booster.utils.analytics.AnalyticsUtils;
@@ -96,6 +98,8 @@ class RootAdapter extends RecyclerView.Adapter<RootAdapter.ViewHolder> {
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            rxBus.send(new ShowAdEvent(AdTypes.INTERSTITIAL));
 
             if (!RootTools.isRootAvailable()) {
                 Toast.makeText(context, R.string.no_root_permission, Toast.LENGTH_SHORT).show();

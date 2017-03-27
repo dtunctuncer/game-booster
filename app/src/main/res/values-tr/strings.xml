@@ -11,10 +11,14 @@
     <string name="ultra_mode">ULTRA BOOST</string>
     <string name="ultra_mode_help">Benchmarklar ve güçlü oyunları için cihazı boostlar\n\n-Tüm CPU seçenekleri maksimum hızda çalıştırılır\n-Tüm CPU çekirdekleri uyanık kalmaya zorlanır\n-CPU maksimum performan için optimize edilir\n-RAM-Free Tweak uygulanır\n-Maksimum performans için SD Card boost tweak uygulanır</string>
     <string name="stop">DURDUR</string>
-    <string name="notification_title">GameBooster çalışıyor</string>
+    <string name="notification_title">Game Booster çalışıyor</string>
     <string name="ok">OK</string>
     <string name="no_root_error">Üzngünüz :( cihazınız henüz rootlanmamış</string>
     <string name="no_mode">No Mode</string>
     <string name="dialog_title">Boostlanıyor…</string>
     <string name="no_root_permission">Root izni olmadan root modları kullanamazsınız</string>
+    <string name="banner_ad_unit_id">ca-app-pub-9443930888865587/9786892357</string>
+    <string name="interstial_ad_unit_id">ca-app-pub-9443930888865587/9110737950</string>
+    <string name="interstial_root_ad_unit_id">ca-app-pub-9443930888865587/2726127154</string>
+    <string name="ad_app_id">ca-app-pub-9443930888865587~8310159157</string>
 </resources>
