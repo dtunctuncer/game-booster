@@ -16,8 +16,8 @@
     <string name="no_mode">No Mode</string>
     <string name="dialog_title">Boosting...</string>
     <string name="no_root_permission">You can not use modes without root permission</string>
-    <string name="banner_ad_unit_id">ca-app-pub-9443930888865587/9786892357</string>
-    <string name="interstial_ad_unit_id">ca-app-pub-9443930888865587/9110737950</string>
-    <string name="interstial_root_ad_unit_id">ca-app-pub-9443930888865587/2726127154</string>
-    <string name="ad_app_id">ca-app-pub-9443930888865587~8310159157</string>
+    <string name="banner_ad_unit_id"></string>
+    <string name="interstial_ad_unit_id"></string>
+    <string name="interstial_root_ad_unit_id"></string>
+    <string name="ad_app_id"></string>
 </resources>
